@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rincian Prediksi - Ragumu Rugimu</title>
+<style>
+  :root{
+    --bg-deep:#050b18;
+    --bg-panel:#0c1730;
+    --gold-1:#f6d26b;
+    --gold-2:#c9922c;
+    --gold-3:#7a5115;
+    --green:#3ddc84;
+    --green-glow:#1e6b45;
+    --text-soft:#cdd6e8;
+    --text-dim:#8a97b5;
+    --divider:#22304f;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 0%, #12234a 0%, transparent 45%),
+      radial-gradient(circle at 85% 10%, #12234a 0%, transparent 40%),
+      var(--bg-deep);
+    font-family: 'Segoe UI', 'Trebuchet MS', Arial, sans-serif;
+    color:var(--text-soft);
+    padding: 32px 16px 60px;
+  }
+
+  .wrap{
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .masthead{
+    text-align:center;
+    padding: 18px 10px 26px;
+  }
+
+  .masthead .eyebrow{
+    display:inline-block;
+    font-size:12px;
+    letter-spacing:3px;
+    color: var(--gold-1);
+    background: linear-gradient(180deg, #1a2748, #0e1830);
+    border:1px solid var(--gold-3);
+    padding:6px 16px;
+    border-radius:999px;
+    margin-bottom:14px;
+  }
+
+  .masthead h1{
+    margin:0;
+    font-size: clamp(28px, 6vw, 42px);
+    line-height:1.15;
+    background: linear-gradient(180deg, #fff3c7 0%, var(--gold-1) 40%, var(--gold-2) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    text-shadow: 0 2px 20px rgba(201,146,44,0.25);
+    font-weight:800;
+  }
+
+  .masthead p{
+    color: var(--text-dim);
+    font-size:14px;
+    margin-top:10px;
+  }
+
+  /* Match cards */
+  .match{
+    position:relative;
+    background: linear-gradient(180deg, #0f1c3a 0%, #0a1428 100%);
+    border:1px solid var(--divider);
+    border-radius:16px;
+    margin-bottom:22px;
+    overflow:hidden;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  }
+
+  .match-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 16px 20px 12px;
+    border-bottom: 1px dashed var(--divider);
+  }
+
+  .badge-num{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .badge-num .num{
+    width:28px; height:28px;
+    border-radius:50%;
+    background: linear-gradient(145deg, var(--gold-1), var(--gold-2));
+    color:#1a1200;
+    font-weight:800;
+    font-size:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .datetime{
+    font-size:12.5px;
+    color:var(--text-dim);
+    letter-spacing:0.5px;
+  }
+
+  .odd-pill{
+    background: linear-gradient(145deg, #113a2a, #0a2419);
+    border:1px solid var(--green-glow);
+    color:var(--green);
+    font-weight:800;
+    font-size:15px;
+    padding:5px 14px;
+    border-radius:999px;
+  }
+
+  .teams{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    padding: 18px 16px 6px;
+    text-align:center;
+  }
+
+  .team{
+    flex:1;
+    font-weight:700;
+    font-size: clamp(15px, 3.6vw, 18px);
+    color:#fff;
+  }
+
+  .vs{
+    color: var(--gold-1);
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:1px;
+    padding:4px 10px;
+    border:1px solid var(--gold-3);
+    border-radius:8px;
+  }
+
+  .market-line{
+    text-align:center;
+    padding: 6px 20px 18px;
+    font-size:14px;
+    color: var(--gold-1);
+    font-weight:600;
+  }
+
+  .explain{
+    background: rgba(255,255,255,0.02);
+    border-top:1px solid var(--divider);
+    padding: 18px 22px 22px;
+  }
+
+  .explain h4{
+    margin:0 0 8px;
+    font-size:13px;
+    letter-spacing:1.5px;
+    color:var(--text-dim);
+    text-transform:uppercase;
+  }
+
+  .explain p{
+    margin:0 0 10px;
+    font-size:14.5px;
+    line-height:1.65;
+    color:var(--text-soft);
+  }
+
+  .explain p:last-child{margin-bottom:0;}
+
+  .tag{
+    display:inline-block;
+    font-size:11.5px;
+    font-weight:700;
+    padding:3px 10px;
+    border-radius:6px;
+    margin-right:6px;
+    margin-bottom:10px;
+  }
+
+  .tag.risk-low{ background:#173322; color:#7ee2a8; }
+  .tag.risk-med{ background:#3a2c11; color:#f2c465; }
+  .tag.risk-high{ background:#3a1414; color:#f28a8a; }
+
+  /* Summary */
+  .summary{
+    margin-top: 10px;
+    background: linear-gradient(160deg, #14224a, #0a1530);
+    border: 1px solid var(--gold-3);
+    border-radius: 18px;
+    padding: 26px 22px;
+    text-align:center;
+  }
+
+  .summary .label{
+    font-size:13px;
+    color:var(--text-dim);
+    letter-spacing:2px;
+    text-transform:uppercase;
+  }
+
+  .summary .odd-total{
+    font-size: clamp(38px, 10vw, 54px);
+    font-weight:900;
+    color: var(--green);
+    text-shadow: 0 0 24px rgba(61,220,132,0.35);
+    margin: 6px 0 4px;
+  }
+
+  .summary .sub{
+    font-size:13px;
+    color:var(--text-dim);
+  }
+
+  .disclaimer{
+    margin-top:22px;
+    text-align:center;
+    font-size:12px;
+    color:var(--text-dim);
+    line-height:1.7;
+    padding: 0 10px;
+  }
+
+  .disclaimer strong{ color:var(--gold-1); }
+
+  .footer-brand{
+    text-align:center;
+    margin-top: 26px;
+    font-size:13px;
+    color: var(--text-dim);
+  }
+
+  .footer-brand span{
+    color:var(--gold-1);
+    font-weight:700;
+  }
+
+  @media (max-width:480px){
+    .teams{ flex-direction:column; gap:6px; }
+    .vs{ margin:2px 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <span class="eyebrow">RAGUMU RUGIMU • BILL BY BANG YANDEK</span>
+    <h1>Rincian Penjelasan Prediksi</h1>
+    <p>Biar member paham maksud tiap pasaran sebelum ikut mix parlay ini.</p>
+  </div>
+
+  <!-- Match 1 -->
+  <div class="match">
+    <div class="match-top">
+      <div class="badge-num"><div class="num">1</div><div class="datetime">01 Juli 2026 &bull; 23:00 WIB</div></div>
+      <div class="odd-pill">1.38</div>
+    </div>
+    <div class="teams">
+      <div class="team">🏴 Inggris</div>
+      <div class="vs">VS</div>
+      <div class="team">🇨🇩 DR Congo</div>
+    </div>
+    <div class="market-line">Tendangan Sudut Babak Pertama — Total Over 3.5</div>
+    <div class="explain">
+      <span class="tag risk-low">RISIKO RENDAH</span>
+      <h4>Apa Maksud Pasaran Ini?</h4>
+      <p>Pasaran ini menghitung <strong>jumlah tendangan sudut (corner kick)</strong> dari kedua tim, tapi <strong>hanya di babak pertama</strong> (menit 1–45). "Over 3.5" artinya taruhan menang kalau total corner di babak pertama <strong>4 atau lebih</strong>. Kalau totalnya 3 ke bawah, taruhan kalah.</p>
+      <p>Odds 1.38 tergolong kecil karena pasaran corner biasanya lebih mudah tembus, apalagi kalau salah satu tim (di sini Inggris) diprediksi lebih dominan menyerang dari sisi sayap.</p>
+    </div>
+  </div>
+
+  <!-- Match 2 -->
+  <div class="match">
+    <div class="match-top">
+      <div class="badge-num"><div class="num">2</div><div class="datetime">02 Juli 2026 &bull; 03:00 WIB</div></div>
+      <div class="odd-pill">1.77</div>
+    </div>
+    <div class="teams">
+      <div class="team">🇧🇪 Belgia</div>
+      <div class="vs">VS</div>
+      <div class="team">🇸🇳 Senegal</div>
+    </div>
+    <div class="market-line">Waktu Reguler — Kedua Tim Mencetak Skor (BTTS): Ya</div>
+    <div class="explain">
+      <span class="tag risk-med">RISIKO SEDANG</span>
+      <h4>Apa Maksud Pasaran Ini?</h4>
+      <p>BTTS (Both Teams To Score) "Ya" artinya taruhan menang jika <strong>kedua tim sama-sama mencetak minimal 1 gol</strong> selama 90 menit waktu normal (di luar babak tambahan/adu penalti). Skor akhir seperti 1-1, 2-1, atau 3-2 dianggap menang. Kalau salah satu tim gagal cetak gol (misalnya 1-0 atau 0-0), taruhan kalah.</p>
+      <p>Belgia dan Senegal sama-sama punya lini serang yang tajam, jadi peluang kedua tim cetak gol dianggap cukup masuk akal, meski tetap ada faktor ketidakpastian pertandingan.</p>
+    </div>
+  </div>
+
+  <!-- Match 3 -->
+  <div class="match">
+    <div class="match-top">
+      <div class="badge-num"><div class="num">3</div><div class="datetime">02 Juli 2026 &bull; 07:00 WIB</div></div>
+      <div class="odd-pill">1.64</div>
+    </div>
+    <div class="teams">
+      <div class="team">🇺🇸 AS</div>
+      <div class="vs">VS</div>
+      <div class="team">🇧🇦 Bosnia &amp; Herzegovina</div>
+    </div>
+    <div class="market-line">Waktu Reguler — Kombinasi: Hasil Akhir Menang Tim 1 + Total Gol Over 1.5</div>
+    <div class="explain">
+      <span class="tag risk-med">RISIKO SEDANG</span>
+      <h4>Apa Maksud Pasaran Ini?</h4>
+      <p>Ini pasaran <strong>kombinasi 2 syarat sekaligus (combo bet)</strong>: pertama, <strong>AS harus menang</strong> di waktu normal; kedua, <strong>total gol pertandingan harus lebih dari 1.5</strong> (artinya minimal 2 gol total dari kedua tim gabungan). Kedua syarat ini harus terpenuhi bersamaan — kalau AS menang tapi skornya cuma 1-0 (total gol 1), taruhan tetap kalah karena syarat over gagal.</p>
+      <p>Karena ini gabungan 2 kondisi, risikonya sedikit lebih tinggi dibanding pasaran tunggal, makanya odds-nya 1.64, lebih besar dari sekadar menang biasa.</p>
+    </div>
+  </div>
+
+  <!-- Match 4 -->
+  <div class="match">
+    <div class="match-top">
+      <div class="badge-num"><div class="num">4</div><div class="datetime">01 Juli 2026 &bull; 23:00 WIB</div></div>
+      <div class="odd-pill">1.64</div>
+    </div>
+    <div class="teams">
+      <div class="team">🏴 Inggris</div>
+      <div class="vs">VS</div>
+      <div class="team">🇨🇩 DR Congo</div>
+    </div>
+    <div class="market-line">Waktu Reguler — Kombinasi: Hasil Akhir Menang Tim 1 + Total Gol Over 1.5</div>
+    <div class="explain">
+      <span class="tag risk-med">RISIKO SEDANG</span>
+      <h4>Apa Maksud Pasaran Ini?</h4>
+      <p>Sama seperti pasaran nomor 3, ini juga <strong>combo bet 2 syarat</strong>: <strong>Inggris harus menang</strong>, dan <strong>total gol pertandingan minimal 2 gol (Over 1.5)</strong>. Kedua syarat wajib terpenuhi bersamaan. Kalau Inggris menang tipis 1-0, taruhan tetap dianggap kalah karena total gol belum tembus 1.5.</p>
+      <p>Menariknya, pertandingan ini muncul 2 kali di slip dengan pasaran berbeda (nomor 1 fokus ke corner babak pertama, nomor 4 fokus ke hasil akhir + total gol) — jadi member perlu paham ini bukan duplikat, tapi dua sudut analisa berbeda dari laga yang sama.</p>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary">
+    <div class="label">4 Event Digabung (Parlay / Mix Parlay)</div>
+    <div class="odd-total">6.569</div>
+    <div class="sub">Semua 4 pasaran di atas harus benar semua agar parlay ini menang.<br>Kalau 1 saja meleset, seluruh taruhan gabungan dinyatakan kalah.</div>
+  </div>
+
+  <div class="disclaimer">
+    Konten ini murni untuk <strong>edukasi &amp; pemahaman istilah taruhan</strong> bagi member grup.
+    Hasil pertandingan sepak bola tidak bisa dipastikan 100%, semua prediksi tetap mengandung risiko.
+    <strong>18+</strong> — Judi bisa menyebabkan kecanduan dan kerugian finansial. Pertimbangkan matang-matang dan bertaruh secukupnya sesuai kemampuan.
+  </div>
+
+  <div class="footer-brand">Disusun untuk grup &bull; <span>Bang Yandek</span></div>
+
+</div>
+</body>
+</html>
